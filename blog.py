@@ -29,16 +29,26 @@ def format_size(size_in_mb):
         return f"{size_in_mb / (1024 ** 2):.2f} TB"
 
 def format_text(text):
-    # Replace empty lines with <br>
-    formatted_text = re.sub(r'\n\s*\n', '<br>', text)
+    # Convert [h1], [h2], [h3] to headers
+    formatted_text = re.sub(r'^\[h1\](.*?)$', r'<h1>\1</h1>', text, flags=re.MULTILINE)
+    formatted_text = re.sub(r'^\[h2\](.*?)$', r'<h2>\1</h2>', formatted_text, flags=re.MULTILINE)
+    formatted_text = re.sub(r'^\[h3\](.*?)$', r'<h3>\1</h3>', formatted_text, flags=re.MULTILINE)
+
+    # Replace consecutive blank lines with <br /><br />
+    formatted_text = re.sub(r'(\n\s*\n)', '<br /><br />', formatted_text)
+
+    # Convert single new lines within paragraphs to just line breaks (if needed)
+    formatted_text = re.sub(r'(?<!\n)\n(?!\n)', '<br />', formatted_text)
     
     # Convert [Link Text](url) to HTML link
     formatted_text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', formatted_text)
-    
-    # Convert [b]text[/b] to HTML bold
+
+    # Convert [b]text to HTML bold at line start
+    formatted_text = re.sub(r'^\[b\](.*?)$', r'<b>\1</b>', formatted_text, flags=re.MULTILINE)
     formatted_text = re.sub(r'\[b\](.*?)\[/b\]', r'<b>\1</b>', formatted_text)
-    
+
     return formatted_text
+
 
 def get_post_metadata(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
