@@ -1,0 +1,5 @@
+Paste your post in this directory and they will update in order.
+
+Delete the txt file and the post will be deleted as well.
+
+[b]For more information and updates[/b] [visit](http://github.com/noarche/headless-blog)
