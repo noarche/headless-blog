@@ -95,12 +95,11 @@ def create_post_pages(posts):
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap">
             <link rel="icon" type="image/x-icon" href="{FAVICON}">
             <title>{post['title'].replace('_', ' ')}</title>
             <style>
                 body {{
-                    font-family: 'Trebuchet MS', sans-serif;
+                    font-family: 'Trebuchet MS', Arial, sans-serif;
                     background-color: #000000;
                     color: #FFFFFF;
                     margin: 0;
